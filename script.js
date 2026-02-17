@@ -54,19 +54,27 @@
   setInterval(tickClock, 1000);
   tickClock();
   function loadWeather() {
-    var el = document.getElementById("weatherCairo");
-    if (!el) return;
-    var url = "https://api.open-meteo.com/v1/forecast?latitude=30.0444&longitude=31.2357&current=temperature_2m";
-    xhr(url, function (err, res) {
-      if (err) { el.textContent = "--"; return; }
-      try { var j = JSON.parse(res); el.textContent = Math.round(j.current.temperature_2m) + "°C"; }
-      catch (e) { el.textContent = "--"; }
-    });
-  }
+  var el = document.getElementById("weatherDubai");
+  if (!el) return;
+  var url =
+    "https://api.open-meteo.com/v1/forecast?latitude=25.2048&longitude=55.2708&current=temperature_2m";
+  xhr(url + "&t=" + Date.now(), function (err, res) {
+    if (err) {
+      el.textContent = "--";
+      return;
+    }
+    try {
+      var j = JSON.parse(res);
+      el.textContent = Math.round(j.current.temperature_2m) + "°C";
+    } catch (e) {
+      el.textContent = "--";
+    }
+  });
+}
   loadWeather();
   setInterval(loadWeather, 10 * 60 * 1000);
-  var TABLE_REFRESH_MS = 5 * 60 * 1000;        // every 5 minutes (data saving)
-  var MANIFEST_REFRESH_MS = 6 * 60 * 60 * 1000; // every 6 hours
+  var TABLE_REFRESH_MS = 1 * 60 * 1000;        // every 1 minutes
+  var MANIFEST_REFRESH_MS = 5 * 60 * 1000; // every 5 minutes
   var MEDIA_PATH = "media/shared/";
   var MANIFEST_URL = MEDIA_PATH + "manifest.json";
   var frame = document.getElementById("mediaFrame");
@@ -454,3 +462,4 @@
   setInterval(loadRevisit, TABLE_REFRESH_MS);
   debug("Ready ✓ (Muted autoplay + Buffer watchdog + Server-time sync)");
 })();
+
