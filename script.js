@@ -87,26 +87,28 @@
   tickClock();
 
   // ===== Weather (Cairo) =====
-  function loadWeather() {
-    var el = document.getElementById("weatherCairo");
-    if (!el) return;
-    var url =
-      "https://api.open-meteo.com/v1/forecast?latitude=30.0444&longitude=31.2357&current=temperature_2m";
-    xhr(url + "&t=" + Date.now(), function (err, res) {
-      if (err) {
-        el.textContent = "--";
-        return;
-      }
-      try {
-        var j = JSON.parse(res);
-        el.textContent = Math.round(j.current.temperature_2m) + "°C";
-      } catch (e) {
-        el.textContent = "--";
-      }
-    });
-  }
-  loadWeather();
-  setInterval(loadWeather, 10 * 60 * 1000);
+function loadWeather() {
+  var el = document.getElementById("weatherDubai");
+  if (!el) return;
+
+  var url =
+    "https://api.open-meteo.com/v1/forecast?latitude=25.2048&longitude=55.2708&current=temperature_2m";
+
+  xhr(url + "&t=" + Date.now(), function (err, res) {
+    if (err) {
+      el.textContent = "--";
+      return;
+    }
+    try {
+      var j = JSON.parse(res);
+      el.textContent = Math.round(j.current.temperature_2m) + "°C";
+    } catch (e) {
+      el.textContent = "--";
+    }
+  });
+}
+loadWeather();
+setInterval(loadWeather, 10 * 60 * 1000);
 
   // ===== LIVE UPDATE SETTINGS =====
   var TABLE_REFRESH_MS = 60 * 1000; // tables live refresh
@@ -374,10 +376,10 @@
   // ===== TABLES (LIVE) =====
   // IMPORTANT: use /pub?output=csv  (NOT pubhtml)
   var CSV_PROGRESS =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQX1ojIMJ_lzxRR6vSD-H4Vw-IqunKMRXUyZT-23nGZikVrigEVHRfhtOItUHtbnnF1FGUrjpHnkfLk/pub?gid=2111665249&single=true&output=csv";
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdGlXzRbnJ7Kp0LjgnChldEReAe3sVm2oeOOOYpHY0uEKjdx3nN8yFO2WRGrUIDgx1VRmUb9nLncrs/pubhtml?gid=2111665249&single=true&output=csv";
 
   var CSV_REVISIT =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQX1ojIMJ_lzxRR6vSD-H4Vw-IqunKMRXUyZT-23nGZikVrigEVHRfhtOItUHtbnnF1FGUrjpHnkfLk/pub?gid=1391443977&single=true&output=csv";
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdGlXzRbnJ7Kp0LjgnChldEReAe3sVm2oeOOOYpHY0uEKjdx3nN8yFO2WRGrUIDgx1VRmUb9nLncrs/pubhtml?gid=1864837152&single=true&output=csv";
 
   var progressBody = document.getElementById("progressBody");
   var revisitBody = document.getElementById("revisitBody");
@@ -575,5 +577,6 @@
   debug("Ready ✓");
 
 })();
+
 
 
