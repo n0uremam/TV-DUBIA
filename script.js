@@ -557,3 +557,4 @@ setInterval(loadWeather, 10 * 60 * 1000);
   setInterval(loadRevisit,  TABLE_REFRESH_MS);
   debug("Ready ✓");
 })();
+
